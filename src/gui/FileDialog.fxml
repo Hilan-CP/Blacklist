@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FileController">
+   <children>
+      <Label text="Caminho do arquivo:">
+         <VBox.margin>
+            <Insets left="15.0" top="10.0" />
+         </VBox.margin>
+      </Label>
+      <Label fx:id="caminhoLabel" text="&lt;caminho&gt;">
+         <VBox.margin>
+            <Insets left="15.0" />
+         </VBox.margin>
+      </Label>
+      <ListView fx:id="amostra" prefHeight="200.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="5.0" />
+         </VBox.margin>
+      </ListView>
+      <HBox prefHeight="45.0" prefWidth="500.0">
+         <children>
+            <Label text="Selecione a coluna com telefones">
+               <HBox.margin>
+                  <Insets left="15.0" right="15.0" top="5.0" />
+               </HBox.margin>
+            </Label>
+            <ComboBox fx:id="colunaComboBox" prefWidth="150.0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </ComboBox>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+      <CheckBox fx:id="cabecalhoCheckBox" mnemonicParsing="false" onAction="#cabecalhoCheckBoxAction" text="O arquivo possui cabeçalho">
+         <VBox.margin>
+            <Insets bottom="10.0" left="15.0" />
+         </VBox.margin>
+      </CheckBox>
+      <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="28.0" prefWidth="500.0">
+        <items>
+          <Button fx:id="cancelarButton" mnemonicParsing="false" onAction="#cancelarButtonAction" text="Cancelar" />
+            <Button fx:id="adicionarButton" mnemonicParsing="false" onAction="#adicionarButtonAction" text="Adicionar" />
+        </items>
+         <padding>
+            <Insets bottom="10.0" left="15.0" />
+         </padding>
+      </ToolBar>
+   </children>
+</VBox>
