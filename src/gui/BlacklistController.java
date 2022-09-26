@@ -1,5 +1,13 @@
 package gui;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,21 +20,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Arquivo;
 import model.Blacklist;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 
 public class BlacklistController implements Initializable{
 	private Blacklist blacklist = new Blacklist();
@@ -58,11 +56,7 @@ public class BlacklistController implements Initializable{
 	@FXML
 	public void procurarButtonAction(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
-		ExtensionFilter txt = new ExtensionFilter("Arquivo de texto", "*.txt");
-		ExtensionFilter csv = new ExtensionFilter("Arquivo de valores separados por ponto e vírgula", "*.csv");
-		
 		fileChooser.setTitle("Selecione o arquivo");
-		fileChooser.getExtensionFilters().addAll(txt, csv);
 		
 		File file = fileChooser.showOpenDialog(Utils.getElementWindow(event));
 		
@@ -132,8 +126,10 @@ public class BlacklistController implements Initializable{
 		else {
 			try {
 				blacklist.importarArquivos();
+				blacklist.validarTelefone();
 				blacklist.exportarTudo(destinoTextField.getText());
 				blacklist.exportarSeparado(destinoTextField.getText());
+				blacklist.clearTelefoneSet();
 				Utils.showAlert("Finalizado", "A exportação finalizada com sucesso.", AlertType.INFORMATION);
 			}
 			catch(IOException e) {

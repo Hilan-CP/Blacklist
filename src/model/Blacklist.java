@@ -78,7 +78,7 @@ public class Blacklist {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(arq));
 		
 		for (String t : telefone) {
-			if(cont > 500000) {
+			if(cont > 400000) {
 				cont = 1;
 				bw.close();
 				nArquivo++;
@@ -91,5 +91,23 @@ public class Blacklist {
 			cont++;
 		}
 		bw.close();
+	}
+	
+	public void clearTelefoneSet() {
+		telefone.clear();
+	}
+	
+	public void validarTelefone() {
+		Set<String> fixo = new TreeSet<>();
+		fixo.add("2");
+		fixo.add("3");
+		fixo.add("4");
+		fixo.add("5");
+		fixo.add("7");
+		
+		telefone.removeIf(t -> t.length() < 10 || t.length() > 11);
+		telefone.removeIf(t -> t.length() == 11 && t.charAt(2) != '9');
+		telefone.removeIf(t -> t.length() == 10 && !fixo.contains(String.valueOf(t.charAt(2))));
+		telefone.removeIf(t -> t.startsWith("10"));
 	}
 }
