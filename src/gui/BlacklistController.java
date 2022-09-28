@@ -14,8 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
@@ -52,6 +56,18 @@ public class BlacklistController implements Initializable{
 	
 	@FXML
 	private ListView<Arquivo> arquivosListView;
+	
+	@FXML
+    private CheckBox dividirCheckBox;
+	
+	@FXML
+    private Label quantidadeLabel;
+	
+	@FXML
+    private CheckBox validarCheckBox;
+	
+	@FXML
+    private Spinner<Integer> quantidadeSpinner;
 
 	@FXML
 	public void procurarButtonAction(ActionEvent event) {
@@ -126,9 +142,13 @@ public class BlacklistController implements Initializable{
 		else {
 			try {
 				blacklist.importarArquivos();
-				blacklist.validarTelefone();
+				if(validarCheckBox.isSelected()) {
+					blacklist.validarTelefone();
+				}
+				if(dividirCheckBox.isSelected()) {
+					blacklist.exportarSeparado(destinoTextField.getText(), quantidadeSpinner.getValue());
+				}
 				blacklist.exportarTudo(destinoTextField.getText());
-				blacklist.exportarSeparado(destinoTextField.getText());
 				blacklist.clearTelefoneSet();
 				Utils.showAlert("Finalizado", "A exportação finalizada com sucesso.", AlertType.INFORMATION);
 			}
@@ -141,6 +161,16 @@ public class BlacklistController implements Initializable{
 		}
 	}
 	
+	@FXML
+	public void dividirCheckBoxAction(ActionEvent event) {
+		if(dividirCheckBox.isSelected()) {
+			quantidadeLabel.setDisable(false);
+		}
+		else {
+			quantidadeLabel.setDisable(true);
+		}
+	}
+
 	public void preencherArquivosListView() {
 		ObservableList<Arquivo> obsList = FXCollections.observableArrayList(blacklist.getArquivos());
 		arquivosListView.setItems(obsList);
@@ -148,6 +178,11 @@ public class BlacklistController implements Initializable{
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		initializeListView();
+		initializeSpinner();
+	}
+	
+	public void initializeListView() {
 		arquivosListView.setCellFactory(new Callback<ListView<Arquivo>, ListCell<Arquivo>>(){
 			@Override
 			public ListCell<Arquivo> call(ListView<Arquivo> list) {
@@ -168,5 +203,10 @@ public class BlacklistController implements Initializable{
 			}
 			
 		});
+	}
+	
+	public void initializeSpinner() {
+		SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 2000000);
+		quantidadeSpinner.setValueFactory(valueFactory);
 	}
 }

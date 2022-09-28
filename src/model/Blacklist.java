@@ -70,7 +70,7 @@ public class Blacklist {
 		}
 	}
 	
-	public void exportarSeparado(String destino) throws IOException {
+	public void exportarSeparado(String destino, int quantidade) throws IOException {
 		int nArquivo = 1;
 		int cont = 1;
 		String arq = destino + "\\blacklist_" + nArquivo + ".txt";
@@ -78,7 +78,7 @@ public class Blacklist {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(arq));
 		
 		for (String t : telefone) {
-			if(cont > 400000) {
+			if(cont > quantidade) {
 				cont = 1;
 				bw.close();
 				nArquivo++;
